@@ -1,0 +1,12 @@
+# Composer
+composer.phar
+vendor/
+
+# Mac OS
+.DS_Store
+
+# test coverage
+tests/clover.xml
+
+# Node.js modules
+node_modules/
