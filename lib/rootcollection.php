@@ -20,7 +20,8 @@ class RootCollection extends SimpleCollection {
 			$principalCollection,
 			new Files\RootCollection(),
 			new Upload\RootCollection(),
-			new SimpleCollection('blocks')
+			new SimpleCollection('blocks'),
+			new SimpleCollection('thumnail')
 		];
 		parent::__construct('root', $children);
 	}
