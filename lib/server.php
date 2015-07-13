@@ -5,9 +5,12 @@ namespace OCA\DAV;
 use OC\Connector\Sabre\Auth;
 use OC\Connector\Sabre\BlockLegacyClientPlugin;
 use OCP\IRequest;
+use Sabre\CalDAV\ICSExportPlugin;
+use Sabre\CalDAV\Plugin as CalDAVPlugin;
+use Sabre\CalDAV\Schedule\Plugin as SchedulePlugin;
+use Sabre\CalDAV\SharingPlugin;
+use Sabre\DAV\Sync\Plugin as SyncPlugin;
 use Sabre\DAV\Auth\Plugin;
-use Sabre\DAV\Tree;
-use Sabre\HTTP\URLUtil;
 use Sabre\HTTP\Util;
 
 class Server {
@@ -30,6 +33,13 @@ class Server {
 
 		$this->server->addPlugin(new BlockLegacyClientPlugin(\OC::$server->getConfig()));
 		$this->server->addPlugin(new Plugin($authBackend, 'ownCloud'));
+		$this->server->addPlugin(new \OC\Connector\Sabre\MaintenancePlugin(\OC::$server->getConfig()));
+		$this->server->addPlugin(new \OC\Connector\Sabre\ExceptionLoggerPlugin('dav', \OC::$server->getLogger()));
+		$this->server->addPlugin(new CalDAVPlugin());
+		$this->server->addPlugin(new ICSExportPlugin());
+		$this->server->addPlugin(new SchedulePlugin());
+		$this->server->addPlugin(new SyncPlugin());
+		$this->server->addPlugin(new SharingPlugin());
 	}
 
 	public function exec() {
