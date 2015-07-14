@@ -33,7 +33,7 @@ class RootCollection implements ICollection {
 	}
 
 	function getName() {
-		return 'my-files';
+		return 'files';
 	}
 
 	function setName($name) {

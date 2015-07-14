@@ -1,5 +1,7 @@
 <?php
 
+require '../../../../3rdparty/autoload.php';
+
 $baseUri = $argv[1];
 $userName = $argv[2];
 $password = $argv[3];
