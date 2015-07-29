@@ -37,7 +37,7 @@ matrix:
     - php: 5.4
       env: DB=mysql
     - php: 5.4
-      env: DB=mysql;TC=litmus
+      env: DB=pgsql;TC=litmus
     - php: 5.4
       env: DB=mysql;TC=lint
 

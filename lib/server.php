@@ -30,6 +30,20 @@ class Server {
 
 		$this->server->addPlugin(new BlockLegacyClientPlugin(\OC::$server->getConfig()));
 		$this->server->addPlugin(new Plugin($authBackend, 'ownCloud'));
+
+		// wait with registering these until auth is handled and the filesystem is setup
+		$this->server->on('beforeMethod', function () {
+			// custom properties plugin must be the last one
+			$this->server->addPlugin(
+				new \Sabre\DAV\PropertyStorage\Plugin(
+					new \OC\Connector\Sabre\CustomPropertiesBackend(
+						$this->server->tree,
+						\OC::$server->getDatabaseConnection(),
+						\OC::$server->getUserSession()->getUser()
+					)
+				)
+			);
+		});
 	}
 
 	public function exec() {
