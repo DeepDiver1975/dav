@@ -23,10 +23,11 @@
 namespace OCA\DAV\Avatar;
 
 
+use OCA\DAV\IPublicNode;
 use OCP\IAvatar;
 use Sabre\DAV\File;
 
-class AvatarNode extends File {
+class AvatarNode extends File implements IPublicNode {
 
 	/**
 	 * AvatarNode constructor.
