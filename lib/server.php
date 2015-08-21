@@ -4,6 +4,7 @@ namespace OCA\DAV;
 
 use OC\Connector\Sabre\Auth;
 use OC\Connector\Sabre\BlockLegacyClientPlugin;
+use OCA\DAV\Files\CustomPropertiesBackend;
 use OCP\IRequest;
 use Sabre\DAV\Auth\Plugin;
 use Sabre\DAV\Tree;
@@ -36,7 +37,7 @@ class Server {
 			// custom properties plugin must be the last one
 			$this->server->addPlugin(
 				new \Sabre\DAV\PropertyStorage\Plugin(
-					new \OC\Connector\Sabre\CustomPropertiesBackend(
+					new CustomPropertiesBackend(
 						$this->server->tree,
 						\OC::$server->getDatabaseConnection(),
 						\OC::$server->getUserSession()->getUser()
