@@ -11,6 +11,7 @@ env:
   global:
     - CORE_BRANCH=master
     - APP_NAME=dav
+    - TC=unit
   matrix:
     - DB=sqlite
 
@@ -29,22 +30,17 @@ before_script:
   - cd apps/$APP_NAME
 
 script:
-  # Test lint
-  - find . -name \*.php -not -path './vendor/*' -exec php -l "{}" \;
+  - bash tests/travis/$TC.sh
 
-  # Run phpunit tests
-  - cd tests
-  - phpunit --configuration phpunit.xml
-
-  # Create coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php ocular.phar code-coverage:upload --format=php-clover clover.xml; fi"
 matrix:
   include:
     - php: 5.4
       env: DB=mysql
+    - php: 5.4
+      env: DB=pgsql;TC=litmus
+    - php: 5.4
+      env: DB=mysql;TC=lint
 
   allow_failures:
     - php: hhvm
-    - php: 7
   fast_finish: true
