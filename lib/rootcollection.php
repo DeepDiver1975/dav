@@ -22,6 +22,7 @@ class RootCollection extends SimpleCollection {
 			new Upload\RootCollection(),
 			new Thumbnail\RootCollection(),
 			new SimpleCollection('blocks'),
+			new Zip\RootCollection(),
 		];
 		parent::__construct('root', $children);
 	}
