@@ -17,4 +17,4 @@ fi
 
 # run the tests
 cd /tmp/litmus/litmus-0.13
-make URL=http://127.0.0.1:8888/remote.php/dav/files CREDS="admin admin" check
+make URL=http://127.0.0.1:8888/remote.php/dav/files CREDS="admin admin" TESTS="basic copymove props locks" basic
