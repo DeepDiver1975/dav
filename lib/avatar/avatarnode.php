@@ -66,4 +66,18 @@ class AvatarNode extends File implements IPublicNode {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Returns the mime-type for a file
+	 *
+	 * If null is returned, we'll assume application/octet-stream
+	 *
+	 * @return string|null
+	 */
+	function getContentType() {
+		if ($this->ext === 'png') {
+			return 'image/png';
+		}
+		return 'image/jpeg';
+	}
+
 }
