@@ -17,10 +17,12 @@ class RootCollection extends SimpleCollection {
 //		$principalCollection->disableListing = true;
 		$avatarCollection = new Avatar\RootCollection($principalBackend);
 //		$avatarCollection->disableListing = true;
+		$filesCollection = new Files\RootCollection($principalBackend);
+//		$filesCollection->disableListing = true;
 
 		$children = [
 			$principalCollection,
-			new Files\RootCollection(),
+			$filesCollection,
 			new Upload\RootCollection(),
 			new Thumbnail\RootCollection(),
 			new SimpleCollection('blocks'),

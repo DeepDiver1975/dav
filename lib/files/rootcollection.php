@@ -2,60 +2,27 @@
 
 namespace OCA\DAV\Files;
 
-use OC\Connector\Sabre\Directory;
-use Sabre\DAV\Exception\Forbidden;
-use Sabre\DAV\ICollection;
+use Sabre\DAVACL\AbstractPrincipalCollection;
+use Sabre\DAVACL\IPrincipal;
 
-class RootCollection implements ICollection {
+class RootCollection extends AbstractPrincipalCollection {
 
-	function createFile($name, $data = null) {
-		return $this->impl()->createFile($name, $data);
-	}
-
-	function createDirectory($name) {
-		$this->impl()->createDirectory($name);
-	}
-
-	function getChild($name) {
-		return $this->impl()->getChild($name);
-	}
-
-	function getChildren() {
-		return $this->impl()->getChildren();
-	}
-
-	function childExists($name) {
-		return $this->impl()->childExists($name);
-	}
-
-	function delete() {
-		$this->impl()->delete();
+	/**
+	 * This method returns a node for a principal.
+	 *
+	 * The passed array contains principal information, and is guaranteed to
+	 * at least contain a uri item. Other properties may or may not be
+	 * supplied by the authentication backend.
+	 *
+	 * @param array $principalInfo
+	 * @return IPrincipal
+	 */
+	function getChildForPrincipal(array $principalInfo) {
+		return new FilesHome($principalInfo);
 	}
 
 	function getName() {
 		return 'files';
 	}
 
-	function setName($name) {
-		throw new Forbidden('Permission denied to rename this folder');
-	}
-
-	/**
-	 * Returns the last modification time, as a unix timestamp
-	 *
-	 * @return int
-	 */
-	function getLastModified() {
-		return $this->impl()->getLastModified();
-	}
-
-	/**
-	 * @return Directory
-	 */
-	private function impl() {
-		$view = \OC\Files\Filesystem::getView();
-		$rootInfo = $view->getFileInfo('');
-		$impl = new Directory($view, $rootInfo);
-		return $impl;
-	}
 }
