@@ -56,8 +56,9 @@ class Auth extends \OC\Connector\Sabre\Auth {
 	}
 
 	public function isPublicResource(\Sabre\DAV\Server $server) {
-		$uri = $server->getRequestUri();
-		$node = $server->tree->getNodeForPath($uri);
-		return ($node instanceof IPublicNode);
+//		$uri = $server->getRequestUri();
+//		$node = $server->tree->getNodeForPath($uri);
+//		return ($node instanceof IPublicNode);
+		return false;
 	}
 }
