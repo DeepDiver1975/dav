@@ -15,6 +15,8 @@ class RootCollection extends SimpleCollection {
 		);
 		$principalCollection = new Collection($principalBackend);
 //		$principalCollection->disableListing = true;
+		$avatarCollection = new Avatar\RootCollection($principalBackend);
+//		$avatarCollection->disableListing = true;
 
 		$children = [
 			$principalCollection,
@@ -22,7 +24,9 @@ class RootCollection extends SimpleCollection {
 			new Upload\RootCollection(),
 			new Thumbnail\RootCollection(),
 			new SimpleCollection('blocks'),
+			$avatarCollection,
 		];
+
 		parent::__construct('root', $children);
 	}
 
