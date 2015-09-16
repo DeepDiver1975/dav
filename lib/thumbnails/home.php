@@ -1,16 +1,25 @@
 <?php
 
-namespace OCA\DAV\Thumbnail;
+namespace OCA\DAV\Thumbnails;
 
 use OC\Connector\Sabre\Directory;
 use OC\Files\Filesystem;
 use OC\Files\View;
 use OC\Preview;
 use Sabre\DAV\Exception\Forbidden;
-use Sabre\DAV\Exception\MethodNotAllowed;
 use Sabre\DAV\ICollection;
+use Sabre\HTTP\URLUtil;
 
-class RootCollection implements ICollection {
+class Home implements ICollection {
+
+	/**
+	 * Home constructor.
+	 *
+	 * @param array $principalInfo
+	 */
+	public function __construct($principalInfo) {
+		$this->principalInfo = $principalInfo;
+	}
 
 	function createFile($name, $data = null) {
 		throw new Forbidden('Permission denied to create a file');
@@ -37,7 +46,8 @@ class RootCollection implements ICollection {
 	}
 
 	function getName() {
-		return 'my-thumbnails';
+		list(,$name) = URLUtil::splitPath($this->principalInfo['uri']);
+		return $name;
 	}
 
 	function setName($name) {
@@ -58,12 +68,12 @@ class RootCollection implements ICollection {
 	 */
 	private function impl() {
 		$rootView = new View();
-		$user = \OC::$server->getUserSession()->getUser();
-		Filesystem::initMountPoints($user->getUID());
-		if (!$rootView->file_exists('/' . $user->getUID() . '/thumbnails')) {
-			$rootView->mkdir('/' . $user->getUID() . '/thumbnails');
+		$user = $this->getName();
+		Filesystem::initMountPoints($user);
+		if (!$rootView->file_exists('/' . $user . '/thumbnails')) {
+			$rootView->mkdir('/' . $user . '/thumbnails');
 		}
-		$view = new View('/' . $user->getUID() . '/thumbnails');
+		$view = new View('/' . $user . '/thumbnails');
 		$rootInfo = $view->getFileInfo('');
 		$impl = new Directory($view, $rootInfo);
 		return $impl;

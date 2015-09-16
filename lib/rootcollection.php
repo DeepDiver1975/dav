@@ -19,12 +19,14 @@ class RootCollection extends SimpleCollection {
 //		$avatarCollection->disableListing = true;
 		$filesCollection = new Files\RootCollection($principalBackend);
 //		$filesCollection->disableListing = true;
+		$thumbsCollection = new Thumbnails\RootCollection($principalBackend);
+//		$thumbsCollection->disableListing = true;
 
 		$children = [
 			$principalCollection,
 			$filesCollection,
 			new Upload\RootCollection(),
-			new Thumbnail\RootCollection(),
+			$thumbsCollection,
 			new SimpleCollection('blocks'),
 			$avatarCollection,
 		];
