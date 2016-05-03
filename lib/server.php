@@ -15,6 +15,7 @@ class Server {
 	private $request;
 
 	public function __construct(IRequest $request, $baseUri) {
+		// test PR
 		$this->request = $request;
 		$this->baseUri = $baseUri;
 		$root = new RootCollection();
